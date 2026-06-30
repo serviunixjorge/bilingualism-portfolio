@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jorge Hurtado — Interactive Language Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --surface: #131c2e;
+            --primary: #f97316;
+            --primary-hover: #ea580c;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+        }
+
+        /* Top Header Info */
+        header {
+            padding: 2.5rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, #0f172a 0%, var(--bg-dark) 100%);
+        }
+        header h1 { font-size: 2.2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem; }
+        header h1 span { color: var(--primary); }
+        header p { color: var(--text-muted); font-size: 1rem; max-width: 600px; margin: 0 auto; }
+
+        /* Main Showcase Area */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1rem;
+            position: relative;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Carousel Structure */
+        .carousel-wrapper {
+            width: 100%;
+            position: relative;
+            background: var(--surface);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            padding: 3.5rem 2.5rem;
+            min-height: 520px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide {
+            display: none;
+            animation: fadeEffect 0.5s ease-in-out;
+            height: 100%;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        @keyframes fadeEffect {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Two Column Layout inside Slide for Images */
+        .slide-body {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .slide-text {
+            flex: 1;
+        }
+
+        .slide-img {
+            width: 280px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        /* Slide Content */
+        .slide-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .slide-tag { color: var(--primary); background: rgba(249, 115, 22, 0.1); padding: 0.3rem 0.8rem; border-radius: 4px; }
+        .slide-number { color: var(--text-muted); }
+
+        .slide h2 { font-size: 1.8rem; margin-bottom: 1.5rem; color: #ffffff; font-weight: 600; }
+        .slide p { font-size: 1.05rem; color: #cbd5e1; text-align: justify; line-height: 1.8; }
+
+        /* Vocabulary Highlight Styling */
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .vocab-box { background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 1rem; border-radius: 6px; font-size: 0.9rem; }
+        .vocab-box strong { color: var(--primary); }
+
+        /* Controls */
+        .carousel-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .nav-btn {
+            background: var(--bg-dark);
+            color: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .nav-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #ffffff;
+        }
+
+        /* Bottom Institutional Footer */
+        footer {
+            background: #090d16;
+            padding: 2.5rem 1rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+        }
+        footer .author-name { color: #ffffff; font-weight: 600; }
+
+        @media (max-width: 768px) {
+            .slide-body { flex-direction: column; gap: 1.5rem; }
+            .slide-img { width: 100%; height: 160px; }
+            .carousel-wrapper { padding: 2rem 1.5rem; min-height: 600px; }
+            header h1 { font-size: 1.7rem; }
+            .slide h2 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Interactive <span>Language Hub</span></h1>
+        <p>GA5-240202501-AA1-EV03 — Digital Evidence Carousel</p>
+    </header>
+
+    <main>
+        <div class="carousel-wrapper">
+            
+            <div class="slide active">
+                <div class="slide-meta">
+                    <span class="slide-tag">Apprentice Profile</span>
+                    <span class="slide-number">Slide 1 of 5</span>
+                </div>
+                <h2>Jorge Eliecer Hurtado Molina</h2>
+                <div class="slide-body">
+                    <div class="slide-text">
+                        <p>Welcome to my interactive language portfolio. I am 31 years old and currently training at SENA. This system functions as a dynamic interface to present the audiovisual pieces, academic texts, and structural reflections I have built to reinforce my B1.1+ English learning process.</p>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&auto=format&fit=crop&q=60" alt="Learning Process" class="slide-img">
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="slide-meta">
+                    <span class="slide-tag">Core Module</span>
+                    <span class="slide-number">Slide 2 of 5</span>
+                </div>
+                <h2>Critical Thinking and Media Literacy</h2>
+                <div class="slide-body">
+                    <div class="slide-text">
+                        <p>In our modern ecosystem, users encounter an overwhelming influx of unverified digital media. Developing media literacy allows IT experts to evaluate streaming sources objectively, preventing infrastructure compromise from phishing or social engineering schemas. Critical thinking enables us to successfully isolate reliable corporate alerts from misleading information.</p>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=500&auto=format&fit=crop&q=60" alt="Media Literacy" class="slide-img">
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="slide-meta">
+                    <span class="slide-tag">Core Module</span>
+                    <span class="slide-number">Slide 3 of 5</span>
+                </div>
+                <h2>Crime and Punishment in the Digital Era</h2>
+                <div class="slide-body">
+                    <div class="slide-text">
+                        <p>Societies continuously face complex legal debates regarding punitive deterrence frameworks versus active rehabilitation. With the rapid expansion of technology, traditional laws must undergo adaptations to adequately judge anonymous cybersecurity threats, unauthorized server penetrations, and data encryption offenses worldwide.</p>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=500&auto=format&fit=crop&q=60" alt="Justice Concept" class="slide-img">
+                </div>
+                <div class="vocab-grid">
+                    <div class="vocab-box"><strong>Deterrence:</strong> Legal parameters designed to discourage offenses.</div>
+                    <div class="vocab-box"><strong>Rehabilitation:</strong> Preparing individuals for an orderly return to society.</div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="slide-meta">
+                    <span class="slide-tag">Professional Context</span>
+                    <span class="slide-number">Slide 4 of 5</span>
+                </div>
+                <h2>Technical Infrastructure & Server Administration</h2>
+                <div class="slide-body">
+                    <div class="slide-text">
+                        <p>My technical domain is centered around user support, data center administration, cyber-defense, and advanced cloud systems. Because enterprise diagnostics logs, infrastructure manual sets, and virtualization setups depend on English interfaces, linguistic integration is critical for analyzing storage statuses or troubleshooting operational bottlenecks.</p>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?w=500&auto=format&fit=crop&q=60" alt="Server Datacenter" class="slide-img">
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="slide-meta">
+                    <span class="slide-tag">Socio-Cultural Context</span>
+                    <span class="slide-number">Slide 5 of 5</span>
+                </div>
+                <h2>Personal Interests, Media & Travel</h2>
+                <div class="slide-body">
+                    <div class="slide-text">
+                        <p>Discussing leisure routines, family environments, or travel goals introduces an excellent mechanism to build grammar flexibility. Interacting with global open-source tech communities or tracking international series assists in expanding casual technical jargon, seamlessly linking formal vocabulary with daily recreational activities.</p>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&auto=format&fit=crop&q=60" alt="Digital Interests" class="slide-img">
+                </div>
+            </div>
+
+            <div class="carousel-nav">
+                <button class="nav-btn" onclick="moveSlide(-1)">Previous</button>
+                <button class="nav-btn" onclick="moveSlide(1)">Next</button>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>Apprentice Portfolio: <span class="author-name">Jorge Eliecer Hurtado Molina</span></p>
+        <p>SENA Network Management Program — 2026</p>
+    </footer>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (index + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        function moveSlide(step) {
+            showSlide(currentSlide + step);
+        }
+    </script>
+</body>
+</html>
